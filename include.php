@@ -23,8 +23,8 @@ function live2d2_GetHTML()
   }
   // 2019-04-21 ~ 2019-06-21
 
-  $model_Name = $zbp->Config('Live2D2')->model;
   $message_Path = $zbp->host . "zb_users/plugin/live2d2/usr/";
+  $model_Name = $zbp->Config('Live2D2')->model;
   $model_Path = $zbp->host . "zb_users/plugin/live2d2/var/model/{$model_Name}/";
   $model_File = $zbp->path . "zb_users/plugin/live2d2/var/model/{$model_Name}/model.json";
   $model_textures = json_decode(file_get_contents($model_File))->textures;
@@ -34,7 +34,8 @@ function live2d2_GetHTML()
   $js2 = live2d2_Path("js-message", "host");
   $music = $zbp->Config("Live2D2")->music;
   if (!empty($music)) {
-    $music = "<input name=\"live2dBGM\" value=\"{$music}\" type=\"hidden\">";
+    $music = '<audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>';
+    $music .= "<input name=\"live2dBGM\" value=\"{$music}\" type=\"hidden\">";
   }
   $str = <<<html
 <div id="landlord" style="left:5px;bottom:0px;">
@@ -57,7 +58,6 @@ function live2d2_GetHTML()
         <div class="live_ico_item type_youdu" id="youduButton"></div>
         <div class="live_ico_item type_quit" id="hideButton"></div>
         <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
-        <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
         {$music}
         <input id="duType" value="douqilai,l2d_caihong" type="hidden">
     </div>
@@ -71,8 +71,8 @@ function live2d2_GetHTML()
     var home_Path = '{$zbp->host}';  // 此处修改为你的域名，必须带斜杠
     var talkAPI = "";
 </script>
-<script type="text/javascript" src="{$js1}"></script>
-<script type="text/javascript" src="{$js2}"></script>
+<script src="{$js1}"></script>
+<script src="{$js2}"></script>
 html;
   return $str;
 }

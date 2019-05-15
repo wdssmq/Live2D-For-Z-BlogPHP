@@ -62,9 +62,11 @@ if (GetVars('act', 'GET') == 'save') {
       </table>
     </form>
     ---------
-    <p>注：需要设置.moc和.mtn两个后缀的MIME类型设置为：application/octet-stream</p>
+    <p>注：需要将.moc和.mtn两个后缀的MIME类型设置为：application/octet-stream</p>
     <p>基于如下代码实现:</p>
     <p>https://github.com/eeg1412/Live2dHistoire</p>
+    <p>本项目源码库：</p>
+    <p>https://github.com/wdssmq/Live2D-For-Z-BlogPHP</p>
   </div>
 </div>
 
