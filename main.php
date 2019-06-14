@@ -15,7 +15,6 @@ if (!$zbp->CheckPlugin('live2d2')) {
 $blogtitle = '看板娘';
 require $blogpath . 'zb_system/admin/admin_header.php';
 require $blogpath . 'zb_system/admin/admin_top.php';
-InstallPlugin_live2d2();
 
 $act = GetVars('act', 'GET');
 $suc = GetVars('suc', 'GET');
@@ -29,6 +28,8 @@ if (GetVars('act', 'GET') == 'save') {
   $zbp->SaveConfig('Live2D2');
   $zbp->SetHint('good');
   Redirect('./main.php' . ($suc === null ? '' : "?act=$suc"));
+} else {
+  InstallPlugin_live2d2();
 }
 ?>
 <div id="divMain">
@@ -40,25 +41,25 @@ if (GetVars('act', 'GET') == 'save') {
   <div id="divMain2">
     <form action="<?php echo BuildSafeURL("main.php?act=save"); ?>" method="post">
       <table width="100%" class="tableBorder">
-      <tr>
-        <th width="10%">项目</th>
-        <th>内容</th>
-        <th width="45%">说明</th>
-      </tr>
-      <tr>
-        <td>人物选择</td>
-        <td><?php echo zbpform::select('model',array('histoire'=>'伊斯特瓦尔', 'nep'=>'涅普迪努'),$zbp->Config("Live2D2")->model); ?></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>音乐</td>
-        <td><?php echo zbpform::text("music", $zbp->Config("Live2D2")->music, "90%"); ?></td>
-        <td></td>
-      </tr>
-      <tr>
-      <td><input type="submit" value="提交" /></td>
-      <td colspan="2"></td>
-      </tr>
+        <tr>
+          <th width="10%">项目</th>
+          <th>内容</th>
+          <th width="45%">说明</th>
+        </tr>
+        <tr>
+          <td>人物选择</td>
+          <td><?php echo zbpform::select('model', array('histoire' => '伊斯特瓦尔', 'nep' => '涅普迪努'), $zbp->Config("Live2D2")->model); ?></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>音乐</td>
+          <td><?php echo zbpform::text("music", $zbp->Config("Live2D2")->music, "90%"); ?></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><input type="submit" value="提交" /></td>
+          <td colspan="2"></td>
+        </tr>
       </table>
     </form>
     ---------
