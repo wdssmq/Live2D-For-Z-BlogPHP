@@ -89,13 +89,13 @@ function live2d2_Path($file, $t = "path")
   $result = $zbp->$t . "zb_users/plugin/live2d2/";
   switch ($file) {
     case "css":
-      return $result . "var/css/live2d.css";
+      return $result . "var/css/live2d.css?v=2019-06-18";
       break;
     case "js-live2d":
-      return $result . "var/js/live2d.js";
+      return $result . "var/js/live2d.js?v=2019-06-18";
       break;
     case "js-message":
-      return $result . "var/js/message.js";
+      return $result . "var/js/message.js?v=2019-06-18";
       break;
     case "u-json":
       return $result . "usr/message.json";
