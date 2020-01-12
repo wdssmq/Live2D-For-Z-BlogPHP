@@ -202,7 +202,7 @@ if (!norunFlag) {
           checkSleep();
         }, 200);
       }
-      console.log(sleepTimer_);
+      // console.log(sleepTimer_);
     }
   }
 
