@@ -29,6 +29,7 @@ if (!norunFlag) {
   var hitFlag = false;
   var AIFadeFlag = false;
   var liveTlakTimer = null;
+  var liveTlakTimerReLoad = null;
   var sleepTimer_ = null;
   var AITalkFlag = false;
   var talkNum = 0;
@@ -84,13 +85,17 @@ if (!norunFlag) {
               talkValTimer();
               clearInterval(liveTlakTimer);
               liveTlakTimer = null;
+              clearTimeout(liveTlakTimerReLoad);
+              liveTlakTimerReLoad = null;
             });
             $(tips.selector).mouseout(function() {
-              showHitokoto();
               if (liveTlakTimer == null) {
-                liveTlakTimer = window.setInterval(function() {
+                liveTlakTimerReLoad = window.setTimeout(function() {
                   showHitokoto();
-                }, 15000);
+                  liveTlakTimer = window.setInterval(function() {
+                    showHitokoto();
+                  }, 15000);
+                }, 1000);
               }
             });
           });
@@ -216,15 +221,41 @@ if (!norunFlag) {
     }
   }
 
-  function showMessage(text, timeout) {
+  function showMessage(text, timeout = 5000) {
     if (Array.isArray(text))
       text = text[Math.floor(Math.random() * text.length + 1) - 1];
     //console.log('showMessage', text);
-    $(".message").stop();
-    $(".message").html(text);
-    $(".message").fadeTo(200, 1);
-    //if (timeout === null) timeout = 5000;
-    //hideMessage(timeout);
+    if ($(".message").hasClass("ing")) {
+      return;
+    }
+    $(".message")
+      .stop(true, true)
+      .delay(73)
+      .animate(
+        {
+          opacity: 0
+        },
+        137,
+        function() {
+          $(".message")
+            .html(text)
+            .addClass("ing");
+        }
+      )
+      .delay(37)
+      .animate(
+        {
+          opacity: 1
+        },
+        137,
+        function() {
+          $(".message").removeClass("ing");
+        }
+      );
+    // $(".message").stop(true,true).fadeOut(300);
+    // $(".message").html(text);
+    // $(".message").fadeTo(200, 1);
+    // hideMessage(timeout);
   }
   function talkValTimer() {
     $("#live_talk").val("1");
