@@ -34,8 +34,8 @@ function live2d2_GetHTML()
   $js2 = live2d2_Path("js-message", "host");
   $music = $zbp->Config("Live2D2")->music;
   if (!empty($music)) {
-    $music = '<audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>';
-    $music .= "<input name=\"live2dBGM\" value=\"{$music}\" type=\"hidden\">";
+    $musicHTML = '<audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>';
+    $musicHTML .= "<input name=\"live2dBGM\" value=\"{$music}\" type=\"hidden\">";
   }
   $str = <<<html
 <div id="landlord">
@@ -64,7 +64,7 @@ function live2d2_GetHTML()
     <div class="live_ico_item type_youdu" id="youduButton"></div>
     <div class="live_ico_item type_quit" id="hideButton"></div>
     <input name="live_statu_val" id="live_statu_val" value="0" type="hidden" />
-    {$music}
+    {$musicHTML}
     <input id="duType" value="douqilai,l2d_caihong" type="hidden" />
   </div>
 </div>
@@ -89,13 +89,13 @@ function live2d2_Path($file, $t = "path")
   $result = $zbp->$t . "zb_users/plugin/live2d2/";
   switch ($file) {
     case "css":
-      return $result . "var/css/live2d.css?v=2020-03-18";
+      return $result . "var/css/live2d.css?v=2020-04-07";
       break;
     case "js-live2d":
-      return $result . "var/js/live2d.js?v=2020-03-18";
+      return $result . "var/js/live2d.js?v=2020-04-07";
       break;
     case "js-message":
-      return $result . "var/js/message.js?v=2020-03-18";
+      return $result . "var/js/message.js?v=2020-04-07";
       break;
     case "u-json":
       return $result . "usr/message.json";

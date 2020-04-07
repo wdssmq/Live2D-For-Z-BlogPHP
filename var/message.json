@@ -22,7 +22,7 @@
         },
 		{
             "selector": "a",
-            "text": ["要看看 {text} 么？"]
+            "text": ["要看看[{text}]么？"]
         },
         {
             "selector": "input[name='q']",

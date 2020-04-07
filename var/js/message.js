@@ -10,7 +10,7 @@ var norunAI = [
   "windows phone",
   "mqqbrowser",
   "msie",
-  "trident/7.0"
+  "trident/7.0",
 ];
 var norunFlag = false;
 
@@ -33,10 +33,10 @@ if (!norunFlag) {
   var sleepTimer_ = null;
   var AITalkFlag = false;
   var talkNum = 0;
-  (function() {
+  (function () {
     function renderTip(template, context) {
       var tokenReg = /(\\)?\{([^\{\}\\]+)(\\)?\}/g;
-      return template.replace(tokenReg, function(word, slash1, token, slash2) {
+      return template.replace(tokenReg, function (word, slash1, token, slash2) {
         if (slash1 || slash2) {
           return word.replace("\\", "");
         }
@@ -52,17 +52,17 @@ if (!norunFlag) {
       });
     }
 
-    String.prototype.renderTip = function(context) {
+    String.prototype.renderTip = function (context) {
       return renderTip(this, context);
     };
 
     var re = /x/;
-    re.toString = function() {
+    re.toString = function () {
       showMessage("哈哈，你打开了控制台，是想要看看我的秘密吗？", 5000);
       return "";
     };
 
-    $(document).on("copy", function() {
+    $(document).on("copy", function () {
       showMessage("你都复制了些什么呀，转载要记得加上出处哦~~", 5000);
     });
 
@@ -71,16 +71,16 @@ if (!norunFlag) {
         cache: true,
         url: message_Path + "message.json",
         dataType: "json",
-        success: function(result) {
-          $.each(result.mouseover, function(index, tips) {
-            $(tips.selector).mouseover(function() {
+        success: function (result) {
+          $.each(result.mouseover, function (index, tips) {
+            $(tips.selector).mouseover(function () {
               var text = tips.text;
               if (Array.isArray(tips.text))
                 text =
                   tips.text[
                     Math.floor(Math.random() * tips.text.length + 1) - 1
                   ];
-              text = text.renderTip({ text: $(this).text() });
+              text = text.renderTip({ text: this.title || $(this).text() });
               showMessage(text, 3000);
               talkValTimer();
               clearInterval(liveTlakTimer);
@@ -88,24 +88,24 @@ if (!norunFlag) {
               clearTimeout(liveTlakTimerReLoad);
               liveTlakTimerReLoad = null;
             });
-            $(tips.selector).mouseout(function() {
+            $(tips.selector).mouseout(function () {
               if (liveTlakTimer == null) {
-                liveTlakTimerReLoad = window.setTimeout(function() {
+                liveTlakTimerReLoad = window.setTimeout(function () {
                   showHitokoto();
-                  liveTlakTimer = window.setInterval(function() {
+                  liveTlakTimer = window.setInterval(function () {
                     showHitokoto();
                   }, 15000);
                 }, 1000);
               }
             });
           });
-          $.each(result.click, function(index, tips) {
-            $(tips.selector).click(function() {
+          $.each(result.click, function (index, tips) {
+            $(tips.selector).click(function () {
               if (hitFlag) {
                 return false;
               }
               hitFlag = true;
-              setTimeout(function() {
+              setTimeout(function () {
                 hitFlag = false;
               }, 8000);
               var text = tips.text;
@@ -120,12 +120,12 @@ if (!norunFlag) {
             clearInterval(liveTlakTimer);
             liveTlakTimer = null;
             if (liveTlakTimer == null) {
-              liveTlakTimer = window.setInterval(function() {
+              liveTlakTimer = window.setInterval(function () {
                 showHitokoto();
               }, 15000);
             }
           });
-        }
+        },
       });
     }
     initTips();
@@ -188,14 +188,14 @@ if (!norunFlag) {
     showMessage(text, 12000);
   })();
 
-  liveTlakTimer = setInterval(function() {
+  liveTlakTimer = setInterval(function () {
     showHitokoto();
   }, 15000);
 
   function showHitokoto() {
     if (sessionStorage.getItem("Sleepy") !== "1") {
       if (!AITalkFlag) {
-        $.getJSON("https://v1.hitokoto.cn/", function(result) {
+        $.getJSON("https://v1.hitokoto.cn/", function (result) {
           talkValTimer();
           showMessage(result.hitokoto, 0);
         });
@@ -203,7 +203,7 @@ if (!norunFlag) {
     } else {
       hideMessage(0);
       if (sleepTimer_ == null) {
-        sleepTimer_ = setInterval(function() {
+        sleepTimer_ = setInterval(function () {
           checkSleep();
         }, 200);
       }
@@ -233,22 +233,20 @@ if (!norunFlag) {
       .delay(73)
       .animate(
         {
-          opacity: 0
+          opacity: 0,
         },
         137,
-        function() {
-          $(".message")
-            .html(text)
-            .addClass("ing");
+        function () {
+          $(".message").html(text).addClass("ing");
         }
       )
       .delay(37)
       .animate(
         {
-          opacity: 1
+          opacity: 1,
         },
         137,
-        function() {
+        function () {
           $(".message").removeClass("ing");
         }
       );
@@ -264,43 +262,37 @@ if (!norunFlag) {
   function hideMessage(timeout) {
     //$('.message').stop().css('opacity',1);
     if (timeout === null) timeout = 5000;
-    $(".message")
-      .delay(timeout)
-      .fadeTo(200, 0);
+    $(".message").delay(timeout).fadeTo(200, 0);
   }
 
   function initLive2d() {
-    $("#hideButton").on("click", function() {
+    $("#hideButton").on("click", function () {
       if (AIFadeFlag) {
         return false;
       } else {
         AIFadeFlag = true;
         localStorage.setItem("live2dhidden", "0");
         $("#landlord").fadeOut(200);
-        $("#open_live2d")
-          .delay(200)
-          .fadeIn(200);
-        setTimeout(function() {
+        $("#open_live2d").delay(200).fadeIn(200);
+        setTimeout(function () {
           AIFadeFlag = false;
         }, 300);
       }
     });
-    $("#open_live2d").on("click", function() {
+    $("#open_live2d").on("click", function () {
       if (AIFadeFlag) {
         return false;
       } else {
         AIFadeFlag = true;
         localStorage.setItem("live2dhidden", "1");
         $("#open_live2d").fadeOut(200);
-        $("#landlord")
-          .delay(200)
-          .fadeIn(200);
-        setTimeout(function() {
+        $("#landlord").delay(200).fadeIn(200);
+        setTimeout(function () {
           AIFadeFlag = false;
         }, 300);
       }
     });
-    $("#youduButton").on("click", function() {
+    $("#youduButton").on("click", function () {
       if ($("#youduButton").hasClass("doudong")) {
         var typeIs = $("#youduButton").attr("data-type");
         $("#youduButton").removeClass("doudong");
@@ -321,7 +313,7 @@ if (!norunFlag) {
       }
     });
     if (talkAPI !== "") {
-      $("#showInfoBtn").on("click", function() {
+      $("#showInfoBtn").on("click", function () {
         var live_statu = $("#live_statu_val").val();
         if (live_statu == "0") {
           return;
@@ -334,7 +326,7 @@ if (!norunFlag) {
           $("#showInfoBtn").hide();
         }
       });
-      $("#showTalkBtn").on("click", function() {
+      $("#showTalkBtn").on("click", function () {
         var live_statu = $("#live_statu_val").val();
         if (live_statu == "1") {
           return;
@@ -346,7 +338,7 @@ if (!norunFlag) {
           $("#showInfoBtn").show();
         }
       });
-      $("#talk_send").on("click", function() {
+      $("#talk_send").on("click", function () {
         var info_ = $("#AIuserText").val();
         var userid_ = $("#AIuserName").val();
         if (info_ == "") {
@@ -363,9 +355,9 @@ if (!norunFlag) {
           url: talkAPI,
           data: {
             info: info_,
-            userid: userid_
+            userid: userid_,
           },
-          success: function(res) {
+          success: function (res) {
             if (res.code !== 100000) {
               talkValTimer();
               showMessage("似乎有什么错误，请和站长联系！", 0);
@@ -376,7 +368,7 @@ if (!norunFlag) {
             console.log(res);
             $("#AIuserText").val("");
             sessionStorage.setItem("live2duser", userid_);
-          }
+          },
         });
       });
     } else {
@@ -414,7 +406,7 @@ if (!norunFlag) {
         $("#musicButton").addClass("play");
       }
       sessionStorage.setItem("live2dBGM_WindowClose", "1");
-      $("#musicButton").on("click", function() {
+      $("#musicButton").on("click", function () {
         if ($("#musicButton").hasClass("play")) {
           $("#live2d_bgm")[0].pause();
           $("#musicButton").removeClass("play");
@@ -423,9 +415,10 @@ if (!norunFlag) {
           $("#live2d_bgm")[0].play();
           $("#musicButton").addClass("play");
           sessionStorage.setItem("live2dBGM_IsPlay", "0");
+          showMessage("音乐加载中，请稍侯", 0);
         }
       });
-      window.onbeforeunload = function() {
+      window.onbeforeunload = function () {
         sessionStorage.setItem("live2dBGM_WindowClose", "0");
         if ($("#musicButton").hasClass("play")) {
           sessionStorage.setItem("live2dBGM_IsPlay", "0");
@@ -433,22 +426,20 @@ if (!norunFlag) {
       };
       document
         .getElementById("live2d_bgm")
-        .addEventListener("timeupdate", function() {
+        .addEventListener("timeupdate", function () {
           var live2dBgmPlayTimeNow = document.getElementById("live2d_bgm")
             .currentTime;
           sessionStorage.setItem("live2dBGM_PlayTime", live2dBgmPlayTimeNow);
         });
       document
         .getElementById("live2d_bgm")
-        .addEventListener("ended", function() {
+        .addEventListener("ended", function () {
           var listNow = parseInt($("#live2d_bgm").attr("data-bgm"));
           listNow++;
           if (listNow > $("input[name=live2dBGM]").length - 1) {
             listNow = 0;
           }
-          var listNewSrc = $("input[name=live2dBGM]")
-            .eq(listNow)
-            .val();
+          var listNewSrc = $("input[name=live2dBGM]").eq(listNow).val();
           sessionStorage.setItem("live2dBGM_Num", listNow);
           $("#live2d_bgm").attr("src", listNewSrc);
           $("#live2d_bgm")[0].play();
@@ -456,7 +447,7 @@ if (!norunFlag) {
         });
       document
         .getElementById("live2d_bgm")
-        .addEventListener("error", function() {
+        .addEventListener("error", function () {
           $("#live2d_bgm")[0].pause();
           $("#musicButton").removeClass("play");
           showMessage("音乐似乎加载不出来了呢！", 0);
@@ -488,7 +479,7 @@ if (!norunFlag) {
     var moveable = false;
     var docMouseMoveEvent = document.onmousemove;
     var docMouseUpEvent = document.onmouseup;
-    smcc.onmousedown = function() {
+    smcc.onmousedown = function () {
       var ent = getEvent();
       moveable = true;
       moveX = ent.clientX;
@@ -499,7 +490,7 @@ if (!norunFlag) {
       if ((isFirefox = navigator.userAgent.indexOf("Firefox") > 0)) {
         window.getSelection().removeAllRanges();
       }
-      document.onmousemove = function() {
+      document.onmousemove = function () {
         if (moveable) {
           var ent = getEvent();
           var x = moveLeft + ent.clientX - moveX;
@@ -508,7 +499,7 @@ if (!norunFlag) {
           obj.style.bottom = y + "px";
         }
       };
-      document.onmouseup = function() {
+      document.onmouseup = function () {
         if (moveable) {
           var historywidth = obj.style.left;
           var historyheight = obj.style.bottom;
@@ -527,7 +518,7 @@ if (!norunFlag) {
       };
     };
   }
-  $(document).ready(function() {
+  $(document).ready(function () {
     var AIimgSrc = model_textures;
     var images = [];
     var imgLength = AIimgSrc.length;
@@ -535,20 +526,20 @@ if (!norunFlag) {
     for (var i = 0; i < imgLength; i++) {
       images[i] = new Image();
       images[i].src = model_Path + AIimgSrc[i];
-      images[i].onload = function() {
+      images[i].onload = function () {
         loadingNum++;
         if (loadingNum === imgLength) {
           var live2dhidden = localStorage.getItem("live2dhidden");
           if (live2dhidden === "0") {
-            setTimeout(function() {
+            setTimeout(function () {
               $("#open_live2d").fadeIn(200);
             }, 1300);
           } else {
-            setTimeout(function() {
+            setTimeout(function () {
               $("#landlord").fadeIn(200);
             }, 1300);
           }
-          setTimeout(function() {
+          setTimeout(function () {
             loadlive2d("live2d", model_Path + "model.json");
           }, 300);
           initLive2d();
