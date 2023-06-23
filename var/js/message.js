@@ -296,7 +296,7 @@ if (!norunFlag) {
       if ($("#youduButton").hasClass("doudong")) {
         var typeIs = $("#youduButton").attr("data-type");
         $("#youduButton").removeClass("doudong");
-        $("body").removeClass(typeIs);
+        $("html").removeClass(typeIs);
         $("#youduButton").attr("data-type", "");
         // $("#landlord").removeAttr("style").fadeIn();
       } else {
@@ -306,7 +306,7 @@ if (!norunFlag) {
 
         $("#youduButton").addClass("doudong");
         $("#youduButton").attr("data-type", dataType);
-        $("body").addClass(dataType);
+        $("html").addClass(dataType);
         //$("#landlord").removeAttr("style").css({
         //top: $(window).scrollTop() + 137 + "px"
         //});
