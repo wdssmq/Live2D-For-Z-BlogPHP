@@ -1,5 +1,7 @@
 // var home_Path = document.location.protocol +'//' + window.document.location.hostname +'/';
 
+/* eslint-disable */
+
 var userAgent = window.navigator.userAgent.toLowerCase();
 console.log(userAgent);
 var norunAI = [
@@ -135,29 +137,29 @@ if (!norunFlag) {
       var referrer = document.createElement("a");
       referrer.href = document.referrer;
       text =
-        '嗨！来自 <span style="color:#0099cc;">' +
+        "嗨！来自 <span style=\"color:#0099cc;\">" +
         referrer.hostname +
         "</span> 的朋友！";
       var domain = referrer.hostname.split(".")[1];
       if (domain == "baidu") {
         text =
-          '嗨！ 来自 百度搜索 的朋友！<br>欢迎访问<span style="color:#0099cc;">「 ' +
+          "嗨！ 来自 百度搜索 的朋友！<br>欢迎访问<span style=\"color:#0099cc;\">「 " +
           document.title.split(" - ")[0] +
           " 」</span>";
       } else if (domain == "so") {
         text =
-          '嗨！ 来自 360搜索 的朋友！<br>欢迎访问<span style="color:#0099cc;">「 ' +
+          "嗨！ 来自 360搜索 的朋友！<br>欢迎访问<span style=\"color:#0099cc;\">「 " +
           document.title.split(" - ")[0] +
           " 」</span>";
       } else if (domain == "google") {
         text =
-          '嗨！ 来自 谷歌搜索 的朋友！<br>欢迎访问<span style="color:#0099cc;">「 ' +
+          "嗨！ 来自 谷歌搜索 的朋友！<br>欢迎访问<span style=\"color:#0099cc;\">「 " +
           document.title.split(" - ")[0] +
           " 」</span>";
       }
     } else {
       if (window.location.href == home_Path) {
-        //主页URL判断，需要斜杠结尾
+        // 主页URL判断，需要斜杠结尾
         var now = new Date().getHours();
         if (now > 23 || now <= 5) {
           text = "你是夜猫子呀？这么晚还不睡觉，明天起的来嘛？";
@@ -180,7 +182,7 @@ if (!norunFlag) {
         }
       } else {
         text =
-          '欢迎阅读<span style="color:#0099cc;">「 ' +
+          "欢迎阅读<span style=\"color:#0099cc;\">「 " +
           document.title.split(" - ")[0] +
           " 」</span>";
       }
@@ -224,7 +226,7 @@ if (!norunFlag) {
   function showMessage(text, timeout = 5000) {
     if (Array.isArray(text))
       text = text[Math.floor(Math.random() * text.length + 1) - 1];
-    //console.log('showMessage', text);
+    // console.log('showMessage', text);
     if ($(".message").hasClass("ing")) {
       return;
     }
@@ -238,7 +240,7 @@ if (!norunFlag) {
         137,
         function () {
           $(".message").html(text).addClass("ing");
-        }
+        },
       )
       .delay(37)
       .animate(
@@ -248,7 +250,7 @@ if (!norunFlag) {
         137,
         function () {
           $(".message").removeClass("ing");
-        }
+        },
       );
     // $(".message").stop(true,true).fadeOut(300);
     // $(".message").html(text);
@@ -260,7 +262,7 @@ if (!norunFlag) {
   }
 
   function hideMessage(timeout) {
-    //$('.message').stop().css('opacity',1);
+    // $('.message').stop().css('opacity',1);
     if (timeout === null) timeout = 5000;
     $(".message").delay(timeout).fadeTo(200, 0);
   }
@@ -307,9 +309,9 @@ if (!norunFlag) {
         $("#youduButton").addClass("doudong");
         $("#youduButton").attr("data-type", dataType);
         $("html").addClass(dataType);
-        //$("#landlord").removeAttr("style").css({
-        //top: $(window).scrollTop() + 137 + "px"
-        //});
+        // $("#landlord").removeAttr("style").css({
+        // top: $(window).scrollTop() + 137 + "px"
+        // });
       }
     });
     if (talkAPI !== "") {
@@ -375,7 +377,7 @@ if (!norunFlag) {
       $("#showInfoBtn").hide();
       $("#showTalkBtn").hide();
     }
-    //获取音乐信息初始化
+    // 获取音乐信息初始化
     var bgmListInfo = $("input[name=live2dBGM]");
     if (bgmListInfo.length == 0) {
       $("#musicButton").hide();
@@ -399,7 +401,7 @@ if (!norunFlag) {
       $("#live2d_bgm")[0].volume = 0.5;
       var live2dBGM_IsPlay = sessionStorage.getItem("live2dBGM_IsPlay");
       var live2dBGM_WindowClose = sessionStorage.getItem(
-        "live2dBGM_WindowClose"
+        "live2dBGM_WindowClose",
       );
       if (live2dBGM_IsPlay == "0" && live2dBGM_WindowClose == "0") {
         $("#live2d_bgm")[0].play();
@@ -453,12 +455,12 @@ if (!norunFlag) {
           showMessage("音乐似乎加载不出来了呢！", 0);
         });
     }
-    //获取用户名
+    // 获取用户名
     var live2dUser = sessionStorage.getItem("live2duser");
     if (live2dUser !== null) {
       $("#AIuserName").val(live2dUser);
     }
-    //获取位置
+    // 获取位置
     var landL = sessionStorage.getItem("historywidth");
     var landB = sessionStorage.getItem("historyheight");
     if (landL == null || landB == null) {
@@ -467,7 +469,7 @@ if (!norunFlag) {
     }
     $("#landlord").css("left", landL + "px");
     $("#landlord").css("bottom", landB + "px");
-    //移动
+    // 移动
     function getEvent() {
       return window.event || arguments.callee.caller.arguments[0];
     }
