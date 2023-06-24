@@ -16,12 +16,6 @@ function live2d2_include(&$templates)
 function live2d2_GetHTML()
 {
   global $zbp;
-  // 2019-04-21 ~ 2019-06-21
-  if (!$zbp->HasConfig("Live2D2") || !$zbp->Config("Live2D2")->HasKey("model")) {
-    $zbp->Config("Live2D2")->model = "histoire";
-    $zbp->SaveConfig('Live2D2');
-  }
-  // 2019-04-21 ~ 2019-06-21
 
   $message_Path = $zbp->host . "zb_users/plugin/live2d2/usr/";
   $model_Name = $zbp->Config('Live2D2')->model;
@@ -36,6 +30,9 @@ function live2d2_GetHTML()
   if (!empty($music)) {
     $musicHTML = '<audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>';
     $musicHTML .= "<input name=\"live2dBGM\" value=\"{$music}\" type=\"hidden\">";
+  } else { {
+      $musicHTML = "";
+    }
   }
   $str = <<<html
 <div id="landlord">
@@ -89,13 +86,13 @@ function live2d2_Path($file, $t = "path")
   $result = $zbp->$t . "zb_users/plugin/live2d2/";
   switch ($file) {
     case "css":
-      return $result . "var/css/live2d.css?v=2023-06-24";
+      return $result . "var/css/live2d.css?v=20230624101";
       break;
     case "js-live2d":
-      return $result . "var/js/live2d.js?v=2023-06-24";
+      return $result . "var/js/live2d.js?v=20230624101";
       break;
     case "js-message":
-      return $result . "var/js/message.js?v=2023-06-24";
+      return $result . "var/js/message.js?v=20230624101";
       break;
     case "u-json":
       return $result . "usr/message.json";
