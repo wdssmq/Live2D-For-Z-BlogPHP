@@ -1,3 +1,4 @@
 usr
 cache
 *.code-workspace
+.history
